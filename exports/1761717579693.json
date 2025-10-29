@@ -1,0 +1,15 @@
+{
+  "timestamp": 1761717579693,
+  "operation": {
+    "id": "db:postgres"
+  },
+  "projectId": "dev-test-1",
+  "files": [
+    {
+      "path": "/mnt/data/dev-test-1/backend/db.sql",
+      "type": "text",
+      "size": 4516,
+      "dependencies": false
+    }
+  ]
+}

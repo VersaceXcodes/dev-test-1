@@ -1,0 +1,19 @@
+{
+  "timestamp": 1761718722776,
+  "operation": {
+    "id": "webapp:react:views",
+    "refs": {
+      "id": "GV_AuthModal",
+      "version": "1761718667973"
+    }
+  },
+  "projectId": "dev-test-1",
+  "files": [
+    {
+      "path": "/mnt/data/dev-test-1/vitereact/src/components/views/GV_AuthModal.tsx",
+      "type": "text",
+      "size": 10583,
+      "dependencies": false
+    }
+  ]
+}

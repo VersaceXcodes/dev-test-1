@@ -1,0 +1,21 @@
+{
+  "timestamp": 1761718097187,
+  "operation": {
+    "id": "backend:tests:main"
+  },
+  "projectId": "dev-test-1",
+  "files": [
+    {
+      "path": "/mnt/data/dev-test-1/backend/server.test.ts",
+      "type": "text",
+      "size": 7766,
+      "dependencies": false
+    },
+    {
+      "path": "/mnt/data/dev-test-1/backend/jest.config.ts",
+      "type": "text",
+      "size": 394,
+      "dependencies": false
+    }
+  ]
+}

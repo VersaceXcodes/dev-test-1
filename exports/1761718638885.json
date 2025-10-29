@@ -1,0 +1,19 @@
+{
+  "timestamp": 1761718638885,
+  "operation": {
+    "id": "webapp:react:views",
+    "refs": {
+      "id": "UV_Dashboard",
+      "version": "1761718557555"
+    }
+  },
+  "projectId": "dev-test-1",
+  "files": [
+    {
+      "path": "/mnt/data/dev-test-1/vitereact/src/components/views/UV_Dashboard.tsx",
+      "type": "text",
+      "size": 13229,
+      "dependencies": false
+    }
+  ]
+}

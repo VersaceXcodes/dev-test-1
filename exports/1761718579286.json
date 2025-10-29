@@ -1,0 +1,19 @@
+{
+  "timestamp": 1761718579286,
+  "operation": {
+    "id": "webapp:react:views",
+    "refs": {
+      "id": "UV_Landing",
+      "version": "latest"
+    }
+  },
+  "projectId": "dev-test-1",
+  "files": [
+    {
+      "path": "/mnt/data/dev-test-1/vitereact/src/components/views/UV_Landing.tsx",
+      "type": "text",
+      "size": 2025,
+      "dependencies": false
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "timestamp": 1761718140750,
+  "operation": {
+    "id": "settings:config:package"
+  },
+  "projectId": "dev-test-1",
+  "files": [
+    {
+      "path": "/mnt/data/dev-test-1/vitereact/package.json",
+      "type": "text",
+      "size": 2949,
+      "dependencies": true
+    }
+  ]
+}

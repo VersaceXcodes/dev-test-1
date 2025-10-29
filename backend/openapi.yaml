@@ -1,0 +1,1006 @@
+>-
+```yaml
+
+openapi: 3.0.0
+
+info:
+  title: HelloConnect API
+  description: User-facing API for HelloConnect web application
+  version: 1.0.0
+  contact:
+    name: HelloConnect Dev Team
+    email: dev@helloconnect.com
+servers:
+  - url: http://localhost:3000/api
+    description: Development server
+
+components:
+  schemas:
+    UserEntity:
+      type: object
+      required: [id, name, email, role, is_active, created_at, updated_at]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        password_hash:
+          type: string
+          nullable: true
+        role:
+          type: string
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    CreateUserInput:
+      type: object
+      required: [id, name, email]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        password_hash:
+          type: string
+          nullable: true
+          nullable: true
+        role:
+          type: string
+        is_active:
+          type: boolean
+
+    UpdateUserInput:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        password_hash:
+          type: string
+          nullable: true
+        role:
+          type: string
+        is_active:
+          type: boolean
+
+    SearchUsersInput:
+      type: object
+      properties:
+        query:
+          type: string
+        limit:
+          type: integer
+          minimum: 1
+          default: 10
+        offset:
+          type: integer
+          minimum: 0
+          default: 0
+        sort_by:
+          type: string
+          enum: [id, name, email, created_at, role, is_active]
+          default: created_at
+        sort_order:
+          type: string
+          enum: [asc, desc]
+          default: desc
+
+    GreetingEntity:
+      type: object
+      required: [id, content, sender_id, recipient_type, recipient_id, status, created_at, updated_at]
+      properties:
+        id:
+          type: string
+        content:
+          type: object
+        sender_id:
+          type: string
+        recipient_type:
+          type: string
+        recipient_id:
+          type: string
+        status:
+          type: string
+          enum: [sent, pending, delivered, failed]
+        scheduled_at:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    CreateGreetingInput:
+      type: object
+      required: [id, content, sender_id, recipient_type, recipient_id, status]
+      properties:
+        id:
+          type: string
+        content:
+          type: object
+        sender_id:
+          type: string
+        recipient_type:
+          type: string
+        recipient_id:
+          type: string
+        status:
+          type: string
+          enum: [sent, pending, delivered, failed]
+        scheduled_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    UpdateGreetingInput:
+      type: object
+      properties:
+        content:
+          type: object
+        sender_id:
+          type: string
+        recipient_type:
+          type: string
+        recipient_id:
+          type: string
+        status:
+          type: string
+          enum: [sent, pending, delivered, failed]
+        scheduled_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    SearchGreetingsInput:
+      type: object
+      properties:
+        query:
+          type: string
+        limit:
+          type: integer
+          minimum: 1
+          default: 10
+        offset:
+          type: integer
+          minimum: 0
+          default: 0
+        sort_by:
+          type: string
+          enum: [id, status, scheduled_at, created_at]
+          default: created_at
+        sort_order:
+          type: string
+          enum: [asc, desc]
+          default: desc
+
+    GreetingMediaEntity:
+      type: object
+      required: [id, greeting_id, url, media_type, created_at]
+      properties:
+        id:
+          type: string
+        greeting_id:
+          type: string
+        url:
+          type: string
+          format: uri
+        media_type:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+
+    CreateGreetingMediaInput:
+      type: object
+      required: [id, greeting_id, url, media_type]
+      properties:
+        id:
+          type: string
+        greeting_id:
+          type: string
+        url:
+          type: string
+          format: uri
+        media_type:
+          type: string
+
+    UpdateGreetingMediaInput:
+      type: object
+      properties:
+        greeting_id:
+          type: string
+        url:
+          type: string
+          format: uri
+        media_type:
+          type: string
+
+    SearchGreetingMediaInput:
+      type: object
+      properties:
+        query:
+          type: string
+        limit:
+          type: integer
+          minimum: 1
+          default: 10
+        offset:
+          type: integer
+          minimum: 0
+          default: 0
+        sort_by:
+          type: string
+          enum: [id, greeting_id, media_type, created_at]
+          default: created_at
+        sort_order:
+          type: string
+          enum: [asc, desc]
+          default: desc
+
+    GroupEntity:
+      type: object
+      required: [id, name, privacy_setting, created_at, updated_at]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        privacy_setting:
+          type: string
+          enum: [private, public]
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    CreateGroupInput:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        privacy_setting:
+          type: string
+          enum: [private, public]
+          default: public
+
+    UpdateGroupInput:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        privacy_setting:
+          type: string
+          enum: [private, public]
+
+    SearchGroupsInput:
+      type: object
+      properties:
+        query:
+          type: string
+        limit:
+          type: integer
+          minimum: 1
+          default: 10
+        offset:
+          type: integer
+          minimum: 0
+          default: 0
+        sort_by:
+          type: string
+          enum: [id, name, privacy_setting, created_at]
+          default: created_at
+        sort_order:
+          type: string
+          enum: [asc, desc]
+          default: desc
+
+    GroupMemberEntity:
+      type: object
+      required: [id, group_id, user_id, role, joined_at]
+      properties:
+        id:
+          type: string
+        group_id:
+          type: string
+        user_id:
+          type: string
+        role:
+          type: string
+          enum: [admin, member]
+        joined_at:
+          type: string
+          format: date-time
+
+    CreateGroupMemberInput:
+      type: object
+      required: [id, group_id, user_id, role]
+      properties:
+        id:
+          type: string
+        group_id:
+          type: string
+        user_id:
+          type: string
+        role:
+          type: string
+          enum: [admin, member]
+
+    UpdateGroupMemberInput:
+      type: object
+      properties:
+        group_id:
+          type: string
+        user_id:
+          type: string
+        role:
+          type: string
+          enum: [admin, member]
+
+    SearchGroupMembersInput:
+      type: object
+      properties:
+        query:
+          type: string
+        limit:
+          type: integer
+          minimum: 1
+          default: 10
+        offset:
+          type: integer
+          minimum: 0
+          default: 0
+        sort_by:
+          type: string
+          enum: [id, group_id, user_id, role, joined_at]
+          default: joined_at
+        sort_order:
+          type: string
+          enum: [asc, desc]
+          default: desc
+
+    GroupChatMessageEntity:
+      type: object
+      required: [id, group_id, sender_id, content, created_at]
+      properties:
+        id:
+          type: string
+        group_id:
+          type: string
+        sender_id:
+          type: string
+        content:
+          type: string
+          minimum: 1
+        created_at:
+          type: string
+          format: date-time
+
+    CreateGroupChatMessageInput:
+      type: object
+      required: [id, group_id, sender_id, content]
+      properties:
+        id:
+          type: string
+        group_id:
+          type: string
+        sender_id:
+          type: string
+        content:
+          type: string
+          minimum: 1
+
+    UpdateGroupChatMessageInput:
+      type: object
+      properties:
+        group_id:
+          type: string
+        sender_id:
+          type: string
+        content:
+          type: string
+          minimum: 1
+
+    SearchGroupChatMessagesInput:
+      type: object
+      properties:
+        query:
+          type: string
+        limit:
+          type: integer
+          minimum: 1
+          default: 10
+        offset:
+          type: integer
+          minimum: 0
+          default: 0
+        sort_by:
+          type: string
+          enum: [id, group_id, sender_id, created_at]
+          default: created_at
+        sort_order:
+          type: string
+          enum: [asc, desc]
+          default: desc
+
+    NotificationEntity:
+      type: object
+      required: [id, user_id, greeting_id, message, read_at, created_at]
+      properties:
+        id:
+          type: string
+        user_id:
+          type: string
+        greeting_id:
+          type: string
+        message:
+          type: string
+        read_at:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+
+    MarkNotificationReadInput:
+      type: object
+      properties:
+        read_at:
+          type: string
+          format: date-time
+
+  parameters:
+    UserIdParam:
+      name: user_id
+      in: path
+      required: true
+      schema:
+        type: string
+
+    GreetingIdParam:
+      name: greeting_id
+      in: path
+      required: true
+      schema:
+        type: string
+
+    GroupIdParam:
+      name: group_id
+      in: path
+      required: true
+      schema:
+        type: string
+
+    MediaIdParam:
+      name: media_id
+      in: path
+      required: true
+      schema:
+        type: string
+
+    MessageIdParam:
+      name: message_id
+      in: path
+      required: true
+      schema:
+        type: string
+
+    NotificationIdParam:
+      name: notification_id
+      in: path
+      required: true
+      schema:
+        type: string
+
+    LimitParam:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        default: 10
+
+    OffsetParam:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+
+    SortByParam:
+      name: sort_by
+      in: query
+      schema:
+        type: string
+
+    SortOrderParam:
+      name: sort_order
+      in: query
+      schema:
+        type: string
+        enum: [asc, desc]
+        default: desc
+
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: $ref: '#/components/schemas/CreateUserInput'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  auth_token:
+                    type: string
+        '400':
+          description: Validation error
+        '409':
+          description: Email already exists
+
+  /auth/login:
+    post:
+      summary: Authenticate user
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password_hash]
+              properties:
+                email:
+                  type: string
+                  format: email
+                password_hash:
+                  type: string
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  auth_token:
+                    type: string
+        '401':
+          description: Invalid credentials
+
+  /users:
+    get:
+      summary: List users with search and pagination
+      operationId: listUsers
+      parameters:
+        - $ref: '#/components/parameters/LimitParam'
+        - $ref: '#/components/parameters/OffsetParam'
+        - $ref: '#/components/parameters/SortByParam'
+        - $ref: '#/components/parameters/SortOrderParam'
+        - name: query
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items: $ref: '#/components/schemas/UserEntity'
+
+  /users/{user_id}:
+    get:
+      summary: Get user details
+      operationId: getUser
+      parameters:
+        - $ref: '#/components/parameters/UserIdParam'
+      responses:
+        '200':
+          description: User details
+          content:
+            application/json:
+              schema: $ref: '#/components/schemas/UserEntity'
+        '404':
+          description: User not found
+
+    put:
+      summary: Update user details
+      operationId: updateUser
+      parameters:
+        - $ref: '#/components/parameters/UserIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: $ref: '#/components/schemas/UpdateUserInput'
+      responses:
+        '200':
+          description: User updated
+        '404':
+          description: User not found
+
+    delete:
+      summary: Delete user
+      operationId: deleteUser
+      parameters:
+        - $ref: '#/components/parameters/UserIdParam'
+      responses:
+        '204':
+          description: User deleted
+        '404':
+          description: User not found
+
+  /greetings:
+    get:
+      summary: List greetings with filters and pagination
+      operationId: listGreetings
+      parameters:
+        - name: tab
+          in: query
+          schema:
+            type: string
+        - name: recipient_id
+          in: query
+          schema:
+            type: string
+        - name: date_min
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: date_max
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: search_query
+          in: query
+          schema:
+            type: string
+        - $ref: '#/components/parameters/LimitParam'
+        - $ref: '#/components/parameters/OffsetParam'
+        - $ref: '#/components/parameters/SortByParam'
+        - $ref: '#/components/parameters/SortOrderParam'
+      responses:
+        '200':
+          description: List of greetings
+          content:
+            application/json:
+              schema:
+                type: array
+                items: $ref: '#/components/schemas/GreetingEntity'
+
+    post:
+      summary: Create new greeting
+      operationId: createGreeting
+      security:
+        - jwtAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: $ref: '#/components/schemas/CreateGreetingInput'
+      responses:
+        '201':
+          description: Greeting created
+          content:
+            application/json:
+              schema: $ref: '#/components/schemas/GreetingEntity'
+        '400':
+          description: Validation error
+
+  /greetings/{greeting_id}:
+    get:
+      summary: Get greeting details
+      operationId: getGreeting
+      parameters:
+        - $ref: '#/components/parameters/GreetingIdParam'
+      responses:
+        '200':
+          description: Greeting details
+          content:
+            application/json:
+              schema: $ref: '#/components/schemas/GreetingEntity'
+        '404':
+          description: Greeting not found
+
+    put:
+      summary: Update greeting
+      operationId: updateGreeting
+      security:
+        - jwtAuth: []
+      parameters:
+        - $ref: '#/components/parameters/GreetingIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: $ref: '#/components/schemas/UpdateGreetingInput'
+      responses:
+        '200':
+          description: Greeting updated
+        '404':
+          description: Greeting not found
+
+    delete:
+      summary: Delete greeting
+      operationId: deleteGreeting
+      security:
+        - jwtAuth: []
+      parameters:
+        - $ref: '#/components/parameters/GreetingIdParam'
+      responses:
+        '204':
+          description: Greeting deleted
+        '404':
+          description: Greeting not found
+
+  /greetings/{greeting_id}/media:
+    post:
+      summary: Upload media for greeting
+      operationId: createGreetingMedia
+      security:
+        - jwtAuth: []
+      parameters:
+        - $ref: '#/components/parameters/GreetingIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: $ref: '#/components/schemas/CreateGreetingMediaInput'
+      responses:
+        '201':
+          description: Media uploaded
+          content:
+            application/json:
+              schema: $ref: '#/components/schemas/GreetingMediaEntity'
+
+  /groups:
+    get:
+      summary: List groups with search and pagination
+      operationId: listGroups
+      parameters:
+        - $ref: '#/components/parameters/LimitParam'
+        - $ref: '#/components/parameters/OffsetParam'
+        - $ref: '#/components/parameters/SortByParam'
+        - $ref: '#/components/parameters/SortOrderParam'
+        - name: query
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of groups
+          content:
+            application/json:
+              schema:
+                type: array
+                items: $ref: '#/components/schemas/GroupEntity'
+
+    post:
+      summary: Create new group
+      operationId: createGroup
+      security:
+        - jwtAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: $ref: '#/components/schemas/CreateGroupInput'
+      responses:
+        '201':
+          description: Group created
+          content:
+            application/json:
+              schema: $ref: '#/components/schemas/GroupEntity'
+
+  /groups/{group_id}:
+    get:
+      summary: Get group details
+      operationId: getGroup
+      parameters:
+        - $ref: '#/components/parameters/GroupIdParam'
+      responses:
+        '200':
+          description: Group details
+          content:
+            application/json:
+              schema: $ref: '#/components/schemas/GroupEntity'
+        '404':
+          description: Group not found
+
+    put:
+      summary: Update group
+      operationId: updateGroup
+      security:
+        - jwtAuth: []
+      parameters:
+        - $ref: '#/components/parameters/GroupIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: $ref: '#/components/schemas/UpdateGroupInput'
+      responses:
+        '200':
+          description: Group updated
+        '404':
+          description: Group not found
+
+    delete:
+      summary: Delete group
+      operationId: deleteGroup
+      security:
+        - jwtAuth: []
+      parameters:
+        - $ref: '#/components/parameters/GroupIdParam'
+      responses:
+        '204':
+          description: Group deleted
+        '404':
+          description: Group not found
+
+  /groups/{group_id}/members:
+    post:
+      summary: Add member to group
+      operationId: createGroupMember
+      security:
+        - jwtAuth: []
+      parameters:
+        - $ref: '#/components/parameters/GroupIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: $ref: '#/components/schemas/CreateGroupMemberInput'
+      responses:
+        '201':
+          description: Member added
+          content:
+            application/json:
+              schema: $ref: '#/components/schemas/GroupMemberEntity'
+
+  /notifications:
+    get:
+      summary: List notifications
+      operationId: listNotifications
+      security:
+        - jwtAuth: []
+      parameters:
+        - $ref: '#/components/parameters/LimitParam'
+        - $ref: '#/components/parameters/OffsetParam'
+        - $ref: '#/components/parameters/SortByParam'
+        - $ref: '#/components/parameters/SortOrderParam'
+      responses:
+        '200':
+          description: List of notifications
+          content:
+            application/json:
+              schema:
+                type: array
+                items: $ref: '#/components/schemas/NotificationEntity'
+
+  /notifications/{notification_id}/mark-read:
+    post:
+      summary: Mark notification as read
+      operationId: markNotificationRead
+      security:
+        - jwtAuth: []
+      parameters:
+        - $ref: '#/components/parameters/NotificationIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: $ref: '#/components/schemas/MarkNotificationReadInput'
+      responses:
+        '200':
+          description: Notification marked as read
+
+  /admin/reports:
+    get:
+      summary: Get admin reports
+      operationId: getAdminReports
+      security:
+        - jwtAuth: []
+      parameters:
+        - name: date_min
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: date_max
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: user_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Admin reports data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_activity:
+                    type: array
+                    items: $ref: '#/components/schemas/UserEntity'
+                  reported_greetings:
+                    type: array
+                    items: $ref: '#/components/schemas/GreetingEntity'
+
+  /admin/users:
+    get:
+      summary: List users for admin
+      operationId: listAdminUsers
+      security:
+        - jwtAuth: []
+      parameters:
+        - $ref: '#/components/parameters/LimitParam'
+        - $ref: '#/components/parameters/OffsetParam'
+        - $ref: '#/components/parameters/SortByParam'
+        - $ref: '#/components/parameters/SortOrderParam'
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items: $ref: '#/components/schemas/UserEntity'

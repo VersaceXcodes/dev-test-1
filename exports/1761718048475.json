@@ -1,0 +1,21 @@
+{
+  "timestamp": 1761718048475,
+  "operation": {
+    "id": "settings:config:package"
+  },
+  "projectId": "dev-test-1",
+  "files": [
+    {
+      "path": "/mnt/data/dev-test-1/backend/package.json",
+      "type": "text",
+      "size": 1447,
+      "dependencies": true
+    },
+    {
+      "path": "/mnt/data/dev-test-1/backend/.env",
+      "type": "text",
+      "size": 93,
+      "dependencies": false
+    }
+  ]
+}

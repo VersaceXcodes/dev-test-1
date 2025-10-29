@@ -1,0 +1,19 @@
+{
+  "timestamp": 1761718631968,
+  "operation": {
+    "id": "webapp:react:views",
+    "refs": {
+      "id": "GV_PasswordRecoveryModal",
+      "version": "1761718545142"
+    }
+  },
+  "projectId": "dev-test-1",
+  "files": [
+    {
+      "path": "/mnt/data/dev-test-1/vitereact/src/components/views/GV_PasswordRecoveryModal.tsx",
+      "type": "text",
+      "size": 5310,
+      "dependencies": false
+    }
+  ]
+}

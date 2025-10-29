@@ -1,0 +1,298 @@
+asyncapi: 2.0.0
+info:
+  title: HelloConnect Realtime API Specification
+  version: 1.0.0
+  description: Realtime events for HelloConnect web application
+servers:
+  - url: ws://localhost:3000/ws
+    protocol: websocket
+    description: Development WebSocket server
+channels:
+  /notifications:
+    description: Realtime notifications for users
+    subscribe:
+      operationId: onNotificationReceived
+      payload:
+        $ref: "#/components/schemas/NotificationEntity"
+    publish:
+      operationId: sendNotification
+      payload:
+        $ref: "#/components/schemas/NotificationEntity"
+  /greetings:
+    description: Greeting creation and status events
+    subscribe:
+      operationId: onGreetingCreated
+      payload:
+        $ref: "#/components/schemas/GreetingEntity"
+    publish:
+      operationId: createGreeting
+      payload:
+        $ref: "#/components/schemas/CreateGreetingInput"
+  /greetings/{greetingId}:
+    description: Greeting-specific updates
+    parameters:
+      greetingId:
+        description: Unique identifier of the greeting
+        schema:
+          type: string
+    subscribe:
+      operationId: onGreetingStatusUpdated
+      payload:
+        $ref: "#/components/schemas/GreetingEntity"
+    publish:
+      operationId: updateGreetingStatus
+      payload:
+        $ref: "#/components/schemas/UpdateGreetingInput"
+  /groups/{groupId}/chat:
+    description: Realtime group chat messages
+    parameters:
+      groupId:
+        description: Unique identifier of the group
+        schema:
+          type: string
+    subscribe:
+      operationId: onGroupMessageReceived
+      payload:
+        $ref: "#/components/schemas/GroupChatMessageEntity"
+    publish:
+      operationId: sendGroupMessage
+      payload:
+        $ref: "#/components/schemas/CreateGroupChatMessageInput"
+  /groups/{groupId}:
+    description: Group membership updates
+    parameters:
+      groupId:
+        description: Unique identifier of the group
+        schema:
+          type: string
+    subscribe:
+      operationId: onGroupMemberJoined
+      payload:
+        $ref: "#/components/schemas/GroupMemberEntity"
+  /admin:
+    description: Admin moderation events
+    subscribe:
+      operationId: onAdminModerationAction
+      payload:
+        $ref: "#/components/schemas/AdminModerationAction"
+components:
+  schemas:
+    UserEntity:
+      type: object
+      required:
+        - id
+        - name
+        - email
+        - role
+        - is_active
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        password_hash:
+          type: string
+          nullable: true
+        role:
+          type: string
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    GreetingEntity:
+      type: object
+      required:
+        - id
+        - content
+        - sender_id
+        - recipient_type
+        - recipient_id
+        - status
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: string
+        content:
+          type: object
+          additionalProperties: true
+        sender_id:
+          type: string
+        recipient_type:
+          type: string
+        recipient_id:
+          type: string
+        status:
+          type: string
+          enum:
+            - sent
+            - pending
+            - delivered
+            - failed
+        scheduled_at:
+          type: string
+          nullable: true
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    NotificationEntity:
+      type: object
+      required:
+        - id
+        - user_id
+        - greeting_id
+        - message
+        - created_at
+      properties:
+        id:
+          type: string
+        user_id:
+          type: string
+        greeting_id:
+          type: string
+        message:
+          type: string
+        read_at:
+          type: string
+          nullable: true
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+    GroupChatMessageEntity:
+      type: object
+      required:
+        - id
+        - group_id
+        - sender_id
+        - content
+        - created_at
+      properties:
+        id:
+          type: string
+        group_id:
+          type: string
+        sender_id:
+          type: string
+        content:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+    GroupMemberEntity:
+      type: object
+      required:
+        - id
+        - group_id
+        - user_id
+        - role
+        - joined_at
+      properties:
+        id:
+          type: string
+        group_id:
+          type: string
+        user_id:
+          type: string
+        role:
+          type: string
+          enum:
+            - admin
+            - member
+        joined_at:
+          type: string
+          format: date-time
+    AdminModerationAction:
+      type: object
+      required:
+        - greeting_id
+        - action
+      properties:
+        greeting_id:
+          type: string
+        action:
+          type: string
+          enum:
+            - deleted
+            - approved
+    CreateGreetingInput:
+      type: object
+      required:
+        - content
+        - sender_id
+        - recipient_type
+        - recipient_id
+      properties:
+        id:
+          type: string
+        content:
+          type: object
+          additionalProperties: true
+        sender_id:
+          type: string
+        recipient_type:
+          type: string
+        recipient_id:
+          type: string
+        status:
+          type: string
+          enum:
+            - sent
+            - pending
+            - delivered
+            - failed
+        scheduled_at:
+          type: string
+          nullable: true
+          format: date-time
+    UpdateGreetingInput:
+      type: object
+      properties:
+        content:
+          type: object
+          additionalProperties: true
+        sender_id:
+          type: string
+        recipient_type:
+          type: string
+        recipient_id:
+          type: string
+        status:
+          type: string
+          enum:
+            - sent
+            - pending
+            - delivered
+            - failed
+        scheduled_at:
+          type: string
+          nullable: true
+          format: date-time
+    CreateGroupChatMessageInput:
+      type: object
+      required:
+        - group_id
+        - sender_id
+        - content
+      properties:
+        id:
+          type: string
+        group_id:
+          type: string
+        sender_id:
+          type: string
+        content:
+          type: string

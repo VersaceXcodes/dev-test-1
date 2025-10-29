@@ -1,0 +1,19 @@
+{
+  "timestamp": 1761718364119,
+  "operation": {
+    "id": "webapp:react:views",
+    "refs": {
+      "id": "GV_ProfileDropdown",
+      "version": "1761718282817"
+    }
+  },
+  "projectId": "dev-test-1",
+  "files": [
+    {
+      "path": "/mnt/data/dev-test-1/vitereact/src/components/views/GV_ProfileDropdown.tsx",
+      "type": "text",
+      "size": 308,
+      "dependencies": false
+    }
+  ]
+}

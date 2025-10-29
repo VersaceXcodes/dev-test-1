@@ -1,0 +1,19 @@
+{
+  "timestamp": 1761718281909,
+  "operation": {
+    "id": "webapp:react:root",
+    "refs": {
+      "id": "app",
+      "version": "latest"
+    }
+  },
+  "projectId": "dev-test-1",
+  "files": [
+    {
+      "path": "/mnt/data/dev-test-1/vitereact/src/App.tsx",
+      "type": "text",
+      "size": 4275,
+      "dependencies": false
+    }
+  ]
+}
